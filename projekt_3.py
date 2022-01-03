@@ -208,7 +208,7 @@ if __name__ == "__main__":
           )
     # pole powieszchni
     print("Pole powierzchni czworokata: "
-          + str(round(pole(a_lam, a_fi, d_lam, d_fi),4)), 'm^2')
+          + str(round(pole(a_lam, a_fi, d_lam, d_fi),6)), 'm^2')
 
 
     srod_fi = kiv.result['phi']
