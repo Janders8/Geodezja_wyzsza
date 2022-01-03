@@ -1,7 +1,7 @@
 function main
     clear;
     % Beta Capricorni
-    Rektascensja = 20.53694444 % 20h 21m 00,673
+    Rektascensja = 20.35018694 % 20h 21m 00,673
     Deklinacja = -14.78138 %−14° 46′ 52,98
 
 
