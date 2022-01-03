@@ -3,6 +3,7 @@ from math import *
 # parametry dla grs 80
 a = 6378137
 e2 = 0.00669437999013
+
 b = a * (1 - e2)**0.5
 f = 1 / 298.257222101
 
@@ -28,6 +29,28 @@ def pole(lam1, phi1, lam2, phi2):
                 log(
                     (1 + e * sin(phi1)) / (1 - e * sin(phi1)))))
             )
+
+def to_decimal(decimal_degree):
+    stopnie = int(decimal_degree)
+    minuty = int((decimal_degree-stopnie) * 60)
+    sekundy = (decimal_degree - stopnie - minuty/60)*3600
+
+    sekundy = round(sekundy,5)
+    sekundy = str(sekundy)
+    stopnie = str(stopnie)
+    minuty = str(minuty)
+
+    # korekta zer
+    if len(stopnie) == 1:
+        stopnie = "0" + stopnie
+
+    if len(minuty) == 1:
+        minuty = "0" + minuty
+
+    if len(sekundy) == 1:
+        sekundy = "0" + sekundy
+
+    return stopnie + '° ' + minuty + "' " + sekundy + "'' "
 
 class Kivioj():
     def __init__(self, S, Az_p, phi_p, lam_p):
@@ -122,6 +145,8 @@ class Vincent():
         # azymuty
         y = cos(U2) * sin(prev_lambda)
         x = cos(U1) * sin(U2) - sin(U1) * cos(U2) * cos(prev_lambda)
+
+
         # poprawa azymutów
         if (y > 0 and x > 0):
             Az12 = atan(y / x)
@@ -148,6 +173,9 @@ class Vincent():
         self.Az21 = Az21
 
 
+
+
+
 if __name__ == "__main__":
     a_fi = 50.25
     a_lam = 20.75
@@ -161,7 +189,7 @@ if __name__ == "__main__":
 
 
     a_d = Vincent(a_lam,d_lam, a_fi, d_fi)
-    print("odleglosc AD i Azymut wprost: ",a_d.s, 'm', ',',  degrees(a_d.Az12), "°")
+    print("odleglosc AD i Azymut wprost: ",round(a_d.s,3), 'm', ',',  to_decimal(degrees(a_d.Az12)))
     middle_fi = (a_fi + d_fi) /2
     middle_lambda = (a_lam + d_lam) /2
 
@@ -174,13 +202,13 @@ if __name__ == "__main__":
 
     kiv = Kivioj(a_d.s/2, a_d.Az12, a_fi, a_lam)
     print("Punkt środkowy AD: "
-          + str((kiv.result['phi'])) + "°"
-          + str((kiv.result['lambda'])) + "°"
+          + str((to_decimal(kiv.result['phi'])))
+          + str(to_decimal(kiv.result['lambda']))
 
           )
     # pole powieszchni
     print("Pole powierzchni czworokata: "
-          + str(pole(a_lam, a_fi, d_lam, d_fi)), 'm^2')
+          + str(round(pole(a_lam, a_fi, d_lam, d_fi),4)), 'm^2')
 
 
     srod_fi = kiv.result['phi']
@@ -188,9 +216,14 @@ if __name__ == "__main__":
 
 
     roznica = Vincent(middle_lambda,srod_lam, middle_fi, srod_fi)
-    print("różnica odległości między punktem środkowym a średniej szerokości", roznica.s, 'm')
+    print("różnica odległości między punktem środkowym a średniej szerokości", round(roznica.s,3), 'm')
     print("Azymut wprost i odwrotny punktu średniej szerokości i punktu środkowego",
-          degrees(roznica.Az12) , "° ", degrees(roznica.Az21), "°")
+          to_decimal(degrees(roznica.Az12)) , "° ", to_decimal(degrees(roznica.Az21)), "°")
+
+
+    #def __init__(self, lambda1, lambda2, fi_1, fi_2):
+    # test = Vincent(20.75,20.75, 50.25, 50)
+    # print(test.s)
 
 
 

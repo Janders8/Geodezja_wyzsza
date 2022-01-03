@@ -62,7 +62,27 @@ def to_azimuth(down, up, func):
     return azi
 
 
+def to_decimal(decimal_degree):
+    stopnie = int(decimal_degree)
+    minuty = int((decimal_degree-stopnie) * 60)
+    sekundy = (decimal_degree - stopnie - minuty/60)*3600
 
+    sekundy = round(sekundy,5)
+    sekundy = str(sekundy)
+    stopnie = str(stopnie)
+    minuty = str(minuty)
+
+    # korekta zer
+    if len(stopnie) == 1:
+        stopnie = "0" + stopnie
+
+    if len(minuty) == 1:
+        minuty = "0" + minuty
+
+    if len(sekundy) == 1:
+        sekundy = "0" + sekundy
+
+    return stopnie + '° ' + minuty + "' " + sekundy + "'' "
 
 
 
@@ -108,23 +128,19 @@ def main():
 
         root = (n[i]**2 + e[i]**2 + u[i]**2)**0.5
 
-        print(to_azimuth(n[i],e[i],np.arctan),
-              root,
-              to_azimuth(root,u[i] , np.arccos))
+        print(to_decimal(to_azimuth(n[i],e[i],np.arctan)),
+              round(root, 3),
+              to_decimal(to_azimuth(root,u[i] , np.arccos)))
 
 
     print("^ Azymut A, odległość skośna oraz Kąt Z ^")
-
-
-
-
 
 
     for a, b, c in zip(n, e, u):
         if c < 0:
             ax.scatter(a, b, c, "red", s= 200 )
             ax.text(a, b, c, '%s' % ("       samolot znika za horyzontem"), size=10, zorder=1, color='k')
-            print("samolot zniknął za horyzontem we wsp neu: ", a, b, c)
+            print("samolot zniknął za horyzontem we wsp neu: ", round(a,3), round(b,3), round(c,3))
             break
 
     ax.text(n[-1], e[-1], u[-1], '%s' % ("     warszawa"), size=10, zorder=1, color='k')
