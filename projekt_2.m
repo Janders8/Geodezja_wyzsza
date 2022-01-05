@@ -6,8 +6,8 @@ function main
 
 
     % warszawa
-    Phi = 52.232222 
-    Lambda = 21.008333
+    %Phi = 52.232222 
+    %Lambda = 21.008333
 
     % Quito
     %Phi = -0.22
@@ -15,8 +15,8 @@ function main
 
 
     % Melbourne
-    %Phi = -37.8
-    %Lambda = 144.95
+    Phi = -37.8
+    Lambda = 144.95
     
     %godziny
     h = 0:1:24;
@@ -67,15 +67,18 @@ for i = 1:25
 end
 
 % rysowanie na kopule
-[x,y,z] = sphere(50);
-z(z < 0) = 0;
-S = surf(x,y,z); 
-axis equal
-S.FaceAlpha = 0.05; 
-hold on 
-scatter3(px,py,pz, 'r', 'filled');
+%[x,y,z] = sphere(50);
+%z(z < 0) = 0;
+%S = surf(x,y,z); 
+%axis equal
+%S.FaceAlpha = 0.05; 
+%hold on 
+%scatter3(px,py,pz, 'r', 'filled');
 % rysowanie wykresu wysokości od czasu
-%plot(h,Z)
+plot(h,Z)
+title("zależność wysokości od czasu - Melbourne")
+xlabel("czas - h")
+ylabel("wysokość słońca nad horyzontem - stopnie")
 
 
 
