@@ -6,8 +6,8 @@ function main
 
 
     % warszawa
-    %Phi = 52.232222 
-    %Lambda = 21.008333
+    Phi = 52.232222 
+    Lambda = 21.008333
 
     % Quito
     %Phi = -0.22
@@ -15,8 +15,8 @@ function main
 
 
     % Melbourne
-    Phi = -37.8
-    Lambda = 144.95
+    %Phi = -37.8
+    %Lambda = 144.95
     
     %godziny
     h = 0:1:24;
@@ -75,8 +75,9 @@ end
 %hold on 
 %scatter3(px,py,pz, 'r', 'filled');
 % rysowanie wykresu wysokości od czasu
-plot(h,Z)
-title("zależność wysokości od czasu - Melbourne")
+wysokosc = 90 - Z
+plot(h,wysokosc)
+title("zależność wysokości od czasu - Warszawa")
 xlabel("czas - h")
 ylabel("wysokość słońca nad horyzontem - stopnie")
 
