@@ -101,9 +101,9 @@ def from_2000_to_gk(x, y, nr):
     m0_2000=0.999923
 
     Xgk = x / m0_2000
-    #?
+
     Ygk = (y-(nr*1000000) - 500000) / m0_2000
-    #print("nr: ", nr)
+
 
     return (Xgk, Ygk)
 
@@ -117,27 +117,7 @@ def to_2000(F, La):
     y=m0_2000*Ygk+1000000*nr+500000
     return (x,y,nr)
 
-def to_decimal(decimal_degree):
-    stopnie = int(decimal_degree)
-    minuty = int((decimal_degree-stopnie) * 60)
-    sekundy = (decimal_degree - stopnie - minuty/60)*3600
 
-    sekundy = round(sekundy,5)
-    sekundy = str(sekundy)
-    stopnie = str(stopnie)
-    minuty = str(minuty)
-
-    # korekta zer
-    if len(stopnie) == 1:
-        stopnie = "0" + stopnie
-
-    if len(minuty) == 1:
-        minuty = "0" + minuty
-
-    if len(sekundy) == 1:
-        sekundy = "0" + sekundy
-
-    return stopnie + '° ' + minuty + "' " + sekundy + "'' "
 
 def gk_to_geo(x,y, L0 ):
 
@@ -176,8 +156,6 @@ def gk_to_geo(x,y, L0 ):
 
     return  degrees(fi_final), degrees(lam_final)
 
-# 1 funckja do 3 i 4
-# kappa to 1- m-układu
 def skala_dlugosci_1992(ygk, fi): # to z tabelki zaokraglone # - > m układu , kappa w kilometrach
 
     fi = radians(fi)
@@ -185,26 +163,22 @@ def skala_dlugosci_1992(ygk, fi): # to z tabelki zaokraglone # - > m układu , k
     N = set_n(fi)
     q = (M*N)**0.5
 
-    #print(M,N,q)
-    # do tabelki dla zwyklych gk
+
     mgk = 1 + ((ygk**2) / (2*q**2)) + ((ygk**2)/(24*q**4))
 
-    # do tabelki 92
+
     m92 = 0.9993 * mgk
 
-    # i do tabelki, kappa w km
-    Z = (1- m92) *1000
+    #kappa
+    Z = ( m92-1) *1000
 
-    #do samego gk
-    #pgk = mgk**2
-    # do tabelki
     m_kwadrat = 0.9993**2 * mgk**2
 
-    Z_ha = (1-m_kwadrat) * 10000
+    Z_ha = (m_kwadrat -1) * 10000
 
-    return(round(m92,6), round(Z,2), round(m_kwadrat,6), round(Z_ha,2))
+    return(round(m92,6), round(Z,3), round(m_kwadrat,6), round(Z_ha,3))
 
-def skala_dlugosci_2000(ygk, fi): # to z tabelki zaokraglone # - > m układu , kappa w kilometrach
+def skala_dlugosci_2000(ygk, fi):
 
     fi = radians(fi)
     M = set_m(fi)
@@ -216,16 +190,14 @@ def skala_dlugosci_2000(ygk, fi): # to z tabelki zaokraglone # - > m układu , k
 
     m2000 = 0.999923 * mgk
 
-    # i do tabelki, kappa w km
-    Z = (1- m2000) *1000
+    Z = ( m2000-1) *1000
 
 
     m_kwadrat = 0.999923**2 * mgk**2
 
-    Z_ha = (1-m_kwadrat) * 10000
+    Z_ha = (m_kwadrat -1) * 10000
 
-    #
-    return(round(m2000,6), round(Z,2), round(m_kwadrat,6), round(Z_ha,2))
+    return(round(m2000,6), round(Z,3), round(m_kwadrat,6), round(Z_ha,3))
 
 def skala_dlugosci_gk(ygk, fi):
 
@@ -238,15 +210,15 @@ def skala_dlugosci_gk(ygk, fi):
     mgk = 1 + ((ygk**2) / (2*q**2)) + ((ygk**2)/(24*q**4))
 
 
-    # i do tabelki, kappa w km
-    Z = (1- mgk) *1000
+
+    Z = (mgk -1) *1000
 
 
     m_kwadrat = mgk**2
 
-    Z_ha = (1-m_kwadrat) * 10000
+    Z_ha = (m_kwadrat -1) * 10000
 
-    return(round(mgk,6), round(Z,2), round(m_kwadrat,6), round(Z_ha,2))
+    return(round(mgk,6), round(Z,3), round(m_kwadrat,6), round(Z_ha,3))
 
 if __name__ == '__main__':
     a_fi = 50.25
@@ -281,12 +253,7 @@ if __name__ == '__main__':
 
     Xgk = []
     Ygk = []
-    #50.125°21.0°
-    #50° 07 ' 30.97361'' 21° 00' 2.34392''
-    #print(xyGK(51.70102972777778,18.175462347222222, '1992'))
-    #print(xyGK(51.70102972777778,18.175462347222222, '2000'))
-    # print('1992',to_1992(51.70102972777778,18.175462347222222))
-    # print('2000',to_2000(51.70102972777778,18.175462347222222))
+
 
 
     # przeliczanie pkt
@@ -335,20 +302,6 @@ if __name__ == '__main__':
     print("pole na elipsoidzie gausa-grugera", poly_gk.area/1000000)
     print("pole w układzie 1992", poly_1992.area/1000000)
     print("pole w układzie 2000", poly_2000.area/1000000)
-    # 2000
-    # na gk
-
-    # xgk, ygk =from_2000_to_gk(5568256.030, 7482170.562, 6)
-    # print(xgk, ygk)
-    #
-    # print("wynik: ",gk_to_geo(xgk,ygk, radians(18)))
-
-    # print(x_2000[0], y_2000[0])
-    # test_x, test_y = from_2000_to_gk(round(x_2000[0],3), round(y_2000[0],3), 7)
-    #
-    # print(test_x, test_y)
-    # fi, lam = gk_to_geo(test_x, test_y, radians(21))
-    # print(to_decimal(fi), to_decimal(lam))
 
     # droga powrotna
     new_1992_fi =[]
@@ -385,7 +338,7 @@ if __name__ == '__main__':
         #print(new_1992_fi[i],new_1992_lam[i])
 
 
-        print("skale znikrztalcen")
+        print("skale zniekształceń")
         print("dla GK")
         for i in range(len(new_1992_fi)):
             print(skala_dlugosci_gk(Ygk[i], gk_to_geo(Xgk[i], Ygk[i], L0_1992)[0]))
@@ -398,8 +351,5 @@ if __name__ == '__main__':
         print("dla 2000")
         for i in range(len(new_1992_fi)):
             print(skala_dlugosci_2000(new_y2000_gk[i], new_2000_fi[i]))
-
-
-
 
 
