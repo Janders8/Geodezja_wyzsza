@@ -66,17 +66,13 @@ def Hirvonen(x, y, z):
     N = akr / (1 - e2kr * sin(second_fi) ** 2) ** 0.5
 
     h = r / cos(second_fi) - N
-    #print("kontrola h", r, cos(second_fi), N), h
-    #check_x, check_y, check_z = to_x_y_z(second_fi, lam, h, akr, e2kr)
 
-    #print("kontrola danych dla hiveriona, orginał: ",x, y, z)
-    #print("ponownie przeliczone: ", round(check_x,2), round(check_y,2), round(check_z,2))
-    # print(check_x, check_y, check_z)
-
-    return to_decimal(degrees(second_fi)), to_decimal(degrees(lam)), round(h, 3)  # degrees, degrees
+    return(second_fi, lam, h)
 
 
 def BursyWolf(xp, yp, zp):
+
+
     kappa = 0.8407728e-6
     alfa = -1.786877784465417e-06
     beta = -2.5612706773016787e-07
@@ -110,7 +106,7 @@ def to_decimal(decimal_degree):
     stopnie = str(stopnie)
     minuty = str(minuty)
 
-    # korekta zer
+
     if len(stopnie) == 1:
         stopnie = "0" + stopnie
 
@@ -132,17 +128,15 @@ if __name__ == '__main__':
     F = {'fi': 50.12527044824481, 'lam': 21.000651088258433}
     points = [A, B, C, D, E, F]
 
-    # print(Hirvonen(10,20,30))
-    # print(BursyWolf(10,20,30))
+
     for P in points:
 
         print('punkt:', P)
         print("dla grs 80")
-        x, y, z = to_x_y_z(radians(P['fi']), radians(P['lam']), 100, a, e2)  # default h = 100 m
+        x, y, z = to_x_y_z(radians(P['fi']), radians(P['lam']), 100, a, e2)
         print(x, y, z)
         print("dla elipsoidy krasowskiego")
         xk, yk, zk = BursyWolf(x, y, z)
         print(xk, yk, zk)
         print('po ponownym przeliczeniu na fi, lambda, h')
         print(Hirvonen(xk, yk, zk))
-
