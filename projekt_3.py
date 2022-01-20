@@ -221,9 +221,4 @@ if __name__ == "__main__":
           to_decimal(degrees(roznica.Az12)) , "° ", to_decimal(degrees(roznica.Az21)), "°")
 
 
-    #def __init__(self, lambda1, lambda2, fi_1, fi_2):
-    # test = Vincent(20.75,20.75, 50.25, 50)
-    # print(test.s)
-
-
 
