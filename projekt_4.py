@@ -156,7 +156,7 @@ def gk_to_geo(x,y, L0 ):
 
     return  degrees(fi_final), degrees(lam_final)
 
-def skala_dlugosci_1992(ygk, fi): # to z tabelki zaokraglone # - > m układu , kappa w kilometrach
+def skala_dlugosci_1992(ygk, fi):
 
     fi = radians(fi)
     M = set_m(fi)
@@ -331,11 +331,6 @@ if __name__ == '__main__':
         fi, lam = gk_to_geo(xgk,ygk, L0_for_2000(y_2000_numbers[i]))
         new_2000_fi.append(fi)
         new_2000_lam.append(lam)
-
-        # gk
-
-
-        #print(new_1992_fi[i],new_1992_lam[i])
 
 
         print("skale zniekształceń")
